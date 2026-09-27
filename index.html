@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Are you idiot? - LeevyStack</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background: #0f172a;
+        background:
+          radial-gradient(1200px 800px at 20% -10%, #1e293b 0%, #0f172a 55%),
+          radial-gradient(
+            1000px 700px at 100% 100%,
+            #1e1b4b 0%,
+            transparent 60%
+          );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+        overflow: hidden;
+      }
+      /* BIGGER CARD - takes almost full screen on mobile */
+      .card {
+        width: min(560px, 96vw);
+        height: min(78vh, 680px);
+        min-height: 520px;
+        background: rgba(30, 41, 59, 0.92);
+        backdrop-filter: blur(22px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 28px;
+        padding: 18px 18px 14px;
+        box-shadow:
+          0 25px 90px rgba(0, 0, 0, 0.6),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        animation: slideUp.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      @keyframes slideUp {
+        from {
+          transform: translateY(70px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .top span {
+        font-size: 12px;
+        letter-spacing: 1px;
+        color: #38bdf8;
+        font-weight: 700;
+      }
+      .top b {
+        font-size: 10px;
+        color: #475569;
+        letter-spacing: 1.2px;
+      }
+      .header {
+        text-align: center;
+        padding: 14px 0 10px;
+      }
+      .emoji {
+        width: 84px;
+        height: 84px;
+        margin: 0 auto 10px;
+        background: radial-gradient(circle at 30% 30%, #334155, #0f172a);
+        border-radius: 22px;
+        display: grid;
+        place-items: center;
+        font-size: 42px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+      h1 {
+        color: white;
+        font-size: clamp(26px, 6vw, 34px);
+        font-weight: 800;
+        letter-spacing: -0.6px;
+      }
+      p.sub {
+        color: #94a3b8;
+        font-size: clamp(12px, 3.2vw, 14px);
+        margin-top: 6px;
+      }
+
+      /* BIG ARENA - 70% of card height for max escape */
+      .arena {
+        flex: 1;
+        margin-top: 16px;
+        position: relative;
+        background: rgba(15, 23, 42, 0.7);
+        border: 1px dashed rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        overflow: hidden;
+        touch-action: none;
+      }
+      /* hint */
+      .arena::before {
+        content: "Hope you are not  😏";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: rgba(148, 163, 184, 0.18);
+        font-size: clamp(18px, 5vw, 26px);
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        pointer-events: none;
+        white-space: nowrap;
+      }
+      button {
+        position: absolute;
+        border: 0;
+        border-radius: 16px;
+        font-family: inherit;
+        font-weight: 800;
+        font-size: clamp(15px, 4vw, 17px);
+        padding: 16px 28px;
+        cursor: pointer;
+        transition:
+          transform.12s,
+          left.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+          top.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+          filter.12s;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        will-change: left, top;
+      }
+      button:active {
+        transform: scale(0.94);
+      }
+      #yes {
+        left: 22%;
+        top: 58%;
+        background: #22c55e;
+        color: white;
+        box-shadow: 0 12px 32px rgba(34, 197, 94, 0.38);
+        z-index: 2;
+      }
+      #no {
+        left: 58%;
+        top: 58%;
+        background: #334155;
+        color: white;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+        z-index: 3;
+      }
+      /* DESKTOP - even bigger escape */
+      @media (min-width: 768px) {
+        .card {
+          width: 680px;
+          height: 72vh;
+          min-height: 600px;
+        }
+        .arena {
+          border-radius: 24px;
+        }
+        #yes {
+          padding: 18px 34px;
+        }
+        #no {
+          padding: 18px 34px;
+        }
+      }
+      /* SMALL PHONES - iPhone SE */
+      @media (max-width: 380px) {
+        .card {
+          height: 86vh;
+          min-height: 500px;
+          padding: 14px;
+        }
+        .arena::before {
+          font-size: 16px;
+        }
+      }
+      /* LANDSCAPE PHONE */
+      @media (max-height: 500px) and (orientation: landscape) {
+        .card {
+          height: 92vh;
+          width: 92vw;
+          flex-direction: row;
+          gap: 16px;
+        }
+        .header {
+          flex: 0 0 180px;
+          padding-top: 20px;
+        }
+        .arena {
+          margin-top: 0;
+        }
+      }
+      .footer {
+        text-align: center;
+        margin-top: 10px;
+        color: #475569;
+        font-size: 9px;
+        letter-spacing: 1px;
+      }
+
+      /* POPUP */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(10px);
+        display: none;
+        place-items: center;
+        z-index: 99;
+        padding: 16px;
+      }
+      .overlay.show {
+        display: grid;
+        animation: fade.2s;
+      }
+      @keyframes fade {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .popup {
+        width: min(360px, 92vw);
+        background: #1e293b;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 24px;
+        padding: 26px;
+        text-align: center;
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7);
+        animation: pop.45s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      @keyframes pop {
+        from {
+          transform: scale(0.8) translateY(24px);
+        }
+        to {
+          transform: scale(1) translateY(0);
+        }
+      }
+      .popup.big {
+        font-size: 56px;
+      }
+      .popup h2 {
+        color: white;
+        margin: 10px 0 6px;
+        font-size: 22px;
+      }
+      .popup p {
+        color: #94a3b8;
+        font-size: 13px;
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+      .popup.ok {
+        position: static;
+        width: 100%;
+        background: #38bdf8;
+        color: #000;
+        padding: 16px;
+        border-radius: 14px;
+        font-size: 16px;
+      }
+      .shake {
+        animation: shake.35s;
+      }
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-10px);
+        }
+        40% {
+          transform: translateX(10px);
+        }
+        60% {
+          transform: translateX(-7px);
+        }
+        80% {
+          transform: translateX(7px);
+        }
+      }
+      canvas#confetti {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 100;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="confetti"></canvas>
+
+    <div class="card" id="card">
+      <div class="top"><span>@code.with.leevy</span><b>• LEEVYSTACK</b></div>
+
+      <div class="header">
+        <div class="emoji">🤔</div>
+        <h1>Are you idiot?</h1>
+        <p class="sub">Be honest... we won't judge (we will) 😂</p>
+      </div>
+
+      <!-- BIGGER ARENA -->
+      <div class="arena" id="arena">
+        <button id="yes">Yes 😎</button>
+        <button id="no">No 🙈</button>
+      </div>
+
+      <div class="footer">
+        LEEVYSTACK • CODE WITH PURPOSE, DEPLOY WITH PRIDE • 0791 086 979
+      </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+      <div class="popup" id="popup">
+        <div class="big">😂</div>
+        <h2>Thanks for Accepting!</h2>
+        <p>
+          We already knew that 😉<br />Welcome to the idiot club — membership
+          free.
+        </p>
+        <button class="ok" onclick="closePopup()">HAHA OK</button>
+      </div>
+    </div>
+
+    <script>
+      const arena = document.getElementById("arena");
+      const noBtn = document.getElementById("no");
+      const yesBtn = document.getElementById("yes");
+      const overlay = document.getElementById("overlay");
+      const card = document.getElementById("card");
+
+      const trollTexts = [
+        "No 😏",
+        "Catch me!",
+        "Nope!",
+        "Try again",
+        "Hehe 😂",
+        "No No No",
+        "Too slow!",
+        "Missed 😜",
+        "Can't touch!",
+        "Bye bye!",
+      ];
+
+      function getSafePosition() {
+        const aW = arena.clientWidth;
+        const aH = arena.clientHeight;
+        const bW = noBtn.offsetWidth;
+        const bH = noBtn.offsetHeight;
+
+        // padding 8px inside
+        const maxX = Math.max(8, aW - bW - 8);
+        const maxY = Math.max(8, aH - bH - 8);
+
+        // avoid overlapping YES too much
+        let x,
+          y,
+          tries = 0;
+        do {
+          x = Math.random() * maxX;
+          y = Math.random() * maxY;
+          tries++;
+          // keep away from yes button center
+          const yesX = yesBtn.offsetLeft;
+          const yesY = yesBtn.offsetTop;
+          const dist = Math.hypot(x - yesX, y - yesY);
+          if (dist > 110 || tries > 12) break;
+        } while (true);
+
+        return { x, y };
+      }
+
+      function moveNo() {
+        const pos = getSafePosition();
+        noBtn.style.left = pos.x + "px";
+        noBtn.style.top = pos.y + "px";
+        noBtn.textContent =
+          trollTexts[Math.floor(Math.random() * trollTexts.length)];
+
+        card.classList.remove("shake");
+        void card.offsetWidth;
+        card.classList.add("shake");
+
+        yesBtn.animate(
+          [
+            { transform: "translateX(0) scale(1)" },
+            { transform: "translateX(-3px) scale(1.03)" },
+            { transform: "translateX(3px) scale(1.03)" },
+            { transform: "translateX(0) scale(1)" },
+          ],
+          { duration: 220 },
+        );
+      }
+
+      // MOUSE + TOUCH + CLICK - all trigger escape
+      noBtn.addEventListener("mouseenter", moveNo);
+      noBtn.addEventListener(
+        "touchstart",
+        (e) => {
+          e.preventDefault();
+          moveNo();
+        },
+        { passive: false },
+      );
+      noBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        moveNo();
+      });
+
+      // On mobile, No button also escapes when finger gets close (30px proximity)
+      arena.addEventListener(
+        "touchmove",
+        (e) => {
+          const touch = e.touches[0];
+          const rect = noBtn.getBoundingClientRect();
+          const dist = Math.hypot(
+            touch.clientX - (rect.left + rect.width / 2),
+            touch.clientY - (rect.top + rect.height / 2),
+          );
+          if (dist < 80) moveNo();
+        },
+        { passive: true },
+      );
+
+      arena.addEventListener("mousemove", (e) => {
+        // desktop proximity escape - if mouse comes within 70px
+        const rect = noBtn.getBoundingClientRect();
+        const dist = Math.hypot(
+          e.clientX - (rect.left + rect.width / 2),
+          e.clientY - (rect.top + rect.height / 2),
+        );
+        if (dist < 70) moveNo();
+      });
+
+      // YES -> popup + confetti
+      yesBtn.addEventListener("click", () => {
+        overlay.classList.add("show");
+        launchConfetti();
+        navigator.vibrate && navigator.vibrate([100, 50, 100, 50, 150]);
+      });
+
+      function closePopup() {
+        overlay.classList.remove("show");
+      }
+
+      // CONFETTI
+      const canvas = document.getElementById("confetti");
+      const ctx = canvas.getContext("2d");
+      let confettis = [];
+      function resize() {
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+      }
+      addEventListener("resize", resize);
+      resize();
+
+      function launchConfetti() {
+        confettis = [];
+        for (let i = 0; i < 150; i++) {
+          confettis.push({
+            x: innerWidth / 2,
+            y: innerHeight / 2.2,
+            vx: (Math.random() - 0.5) * 14,
+            vy: -Math.random() * 11 - 3,
+            r: Math.random() * 6 + 3,
+            color: `hsl(${180 + Math.random() * 60},100%,60%)`,
+            rot: Math.random() * 360,
+            vr: (Math.random() - 0.5) * 12,
+          });
+        }
+        tick();
+      }
+      function tick() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confettis.forEach((c, i) => {
+          c.x += c.vx;
+          c.y += c.vy;
+          c.vy += 0.2;
+          c.rot += c.vr;
+          ctx.save();
+          ctx.translate(c.x, c.y);
+          ctx.rotate((c.rot * Math.PI) / 180);
+          ctx.fillStyle = c.color;
+          ctx.fillRect(-c.r, -c.r, c.r * 2, c.r * 2);
+          ctx.restore();
+          if (c.y > innerHeight + 30) confettis.splice(i, 1);
+        });
+        if (confettis.length > 0) requestAnimationFrame(tick);
+      }
+    </script>
+  </body>
+</html>
